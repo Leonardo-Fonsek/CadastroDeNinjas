@@ -1,10 +1,10 @@
-package dev.java10x.CadatroDeNinjas;
+package dev.java10x.CadastroDeNinjas;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class CadatroDeNinjasApplicationTests {
+class CadastroDeNinjasApplicationTests {
 
 	@Test
 	void contextLoads() {
