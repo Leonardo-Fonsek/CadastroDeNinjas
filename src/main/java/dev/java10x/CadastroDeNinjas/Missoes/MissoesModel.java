@@ -25,6 +25,7 @@ public class MissoesModel {
     private String nome;
 
     @Column (name = "rankMissao")
+    @Enumerated(EnumType.STRING)
     private rankMissao dificuldade;
 
     //Uma missão pode ter vários ninjas
