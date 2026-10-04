@@ -19,8 +19,10 @@ public class NinjaService {
     }
 
     public NinjaModel listarNinjaPorID(Long Id) {
-
         return ninjaRepository.findById(Id).orElseThrow(() -> new RuntimeException("Ninja não encontrado com o ID: " + Id));
+    }
 
+    public NinjaModel criarNinja(NinjaModel ninja){
+        return ninjaRepository.save(ninja);
     }
 }
