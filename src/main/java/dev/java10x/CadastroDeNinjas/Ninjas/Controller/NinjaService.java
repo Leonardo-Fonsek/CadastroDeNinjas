@@ -30,16 +30,13 @@ public class NinjaService {
         ninjaRepository.deleteById(Id);
     }
 
-    public void atualizarNinjaPorID( Long Id, NinjaModel ninjaAtualizado){
-        NinjaModel ninjaASerAlterado = listarNinjaPorID(Id);
+    public NinjaModel atualizarNinjaPorID( Long Id, NinjaModel ninjaAtualizado){
 
-        ninjaASerAlterado.setNome(ninjaAtualizado.getNome());
-        ninjaASerAlterado.setEmail(ninjaAtualizado.getEmail());
-        ninjaASerAlterado.setIdade(ninjaAtualizado.getIdade());
-        ninjaASerAlterado.setMissao(ninjaAtualizado.getMissao());
-
-        ninjaRepository.save(ninjaASerAlterado);
-
+        if(ninjaRepository.existsById(Id)){
+            ninjaAtualizado.setId(Id);
+            return ninjaRepository.save(ninjaAtualizado);
+        }
+        return null;
     }
 
 }
