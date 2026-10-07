@@ -29,6 +29,9 @@ public class NinjaModel {
         @Column (name = "img_url")
         private String imgUrl;
 
+        @Column (name = "nivel")
+        private String nivel;
+
         @Column (name = "Idade")
         private int idade;
 
@@ -36,5 +39,7 @@ public class NinjaModel {
         @ManyToOne
         @JoinColumn(name = "Missoes_id") // Criação da Foreign Key ou chave estrangeiroa
         private MissoesModel missao;
+
+
 
 }
