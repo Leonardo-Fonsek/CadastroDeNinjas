@@ -70,4 +70,28 @@ public class NinjaControllerUi {
         }
     }
 
+    @GetMapping("/alterar/{id}")
+    public String formularioAlterar(@PathVariable Long id, Model model){
+        NinjaDTO ninja = ninjaService.listarNinjaPorID(id);
+        model.addAttribute("ninja", ninja);
+        model.addAttribute("missoes", missoesService.listarMissoes());
+        return "alterarNinjaForm";
+    }
+
+    @PostMapping("/alterarID/{id}")
+    public String salvarAlteracao(
+            @PathVariable Long id,
+            @ModelAttribute NinjaDTO ninja,
+            @RequestParam(required = false) Long missaoId) {
+
+        if(missaoId != null){
+            MissoesModel missao = missoesService.listarMissaoPorID(missaoId);
+            ninja.setMissao(missao);
+        }
+
+        ninjaService.atualizarNinja(id, ninja);
+        return "redirect:/ninjas/ui/listar";
+
+    }
+
 }
