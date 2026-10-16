@@ -1,12 +1,11 @@
 package dev.java10x.CadastroDeNinjas.Ninjas.Controller;
+import dev.java10x.CadastroDeNinjas.Missoes.MissoesModel;
+import dev.java10x.CadastroDeNinjas.Missoes.MissoesService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -14,12 +13,13 @@ import java.util.List;
 @RequestMapping("/ninjas/ui")
 public class NinjaControllerUi {
 
+    private final MissoesService missoesService;
     private final NinjaService ninjaService;
 
-    public NinjaControllerUi(NinjaService ninjaService) {
+    public NinjaControllerUi(MissoesService missoesService, NinjaService ninjaService) {
+        this.missoesService = missoesService;
         this.ninjaService = ninjaService;
     }
-
 
     @GetMapping("/listar")
     public String listarNinjas(Model model){
@@ -44,6 +44,29 @@ public class NinjaControllerUi {
         } else {
             model.addAttribute("mensagem", "Ninja não encontrado");
             return "listarNinjas";
+        }
+    }
+
+    @GetMapping("/criar")
+    public String formularioCriar(Model model) {
+
+        model.addAttribute("ninja", new NinjaDTO());
+        model.addAttribute("missoes", missoesService.listarMissoes());
+        return "criarNinjaForm";
+
+    }
+
+    @PostMapping("/criar")
+    public String salvarNinja(
+            @ModelAttribute NinjaDTO ninja,
+            @RequestParam(required = false) Long missaoId) {
+         {
+            if(missaoId != null){
+                MissoesModel missao = missoesService.listarMissaoPorID(missaoId);
+                ninja.setMissao(missao);
+            }
+            ninjaService.criarNinja(ninja);
+            return "redirect:/ninjas/ui/listar";
         }
     }
 
